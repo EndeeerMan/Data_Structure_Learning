@@ -2,9 +2,10 @@
 #include <stdio.h>
 
 #define INITSIZE 10
+#define ElemType int
 
 typedef struct{
-    int *Data;
+    ElemType *Data;
     int MaxSize;
     int Len;
 }SqList;
@@ -28,15 +29,15 @@ int InitSqList(SqList *db){
 }
 
 int ExtendSqList(SqList *db, int x){
-    int *p = db->Data;      //ÁÙÊ±Ö¸Õë±£´æÊı¾İ
-    db->Data = malloc((db->MaxSize + x)*sizeof(int));   //·ÖÅäĞÂ¿Õ¼ä
+    int *p = db->Data;      //ä¸´æ—¶æŒ‡é’ˆä¿å­˜æ•°æ®
+    db->Data = malloc((db->MaxSize + x)*sizeof(int));   //åˆ†é…æ–°ç©ºé—´
 
     if(db->Data == NULL){
         free(p);
         return 0;
     }
 
-    for(int i=0;i<db->Len;++i){     //¸´ÖÆÊı¾İ
+    for(int i=0;i<db->Len;++i){     //å¤åˆ¶æ•°æ®
         db->Data[i] = p[i];
     }
 
@@ -49,8 +50,8 @@ int ExtendSqList(SqList *db, int x){
 
 int InsertSqList(SqList *db, int x, int element){
     if(x < 0 || x > db->Len){
-        printf("´íÎó£ºÏÂ±êÊı·Ç·¨£¡\n");
-        return 0;       // ÏÂ±ê·Ç·¨£¬À¹½Ø£¡
+        printf("é”™è¯¯ï¼šä¸‹æ ‡æ•°éæ³•ï¼\n");
+        return 0;       // ä¸‹æ ‡éæ³•ï¼Œæ‹¦æˆªï¼
     }
 
     if(db->MaxSize < db->Len + 1){
@@ -72,7 +73,7 @@ int InsertSqList(SqList *db, int x, int element){
 
 int DelSqList(SqList *db, int x){
     if(x < 0 || x >= db->Len){
-        printf("´íÎó£ºÏÂ±êÊı·Ç·¨£¡\n");
+        printf("é”™è¯¯ï¼šä¸‹æ ‡æ•°éæ³•ï¼\n");
         return 0;
     }
 
@@ -89,7 +90,7 @@ int DelSqList(SqList *db, int x){
 
 int* Search_by_position(SqList *db, int x){
     if(x < 0 || x >= db->Len){
-        printf("´íÎó£ºÏÂ±êÊı·Ç·¨£¡\n");
+        printf("é”™è¯¯ï¼šä¸‹æ ‡æ•°éæ³•ï¼\n");
         return NULL;
     }
 
@@ -109,77 +110,77 @@ int main(){
     SqList db;
 
     if(InitSqList(&db)){
-        printf("³õÊ¼»¯ÏßĞÔ±í³É¹¦£¡\n");
+        printf("åˆå§‹åŒ–çº¿æ€§è¡¨æˆåŠŸï¼\n");
     }else{
-        printf("³õÊ¼»¯ÏßĞÔ±íÊ§°Ü£¡\n");
+        printf("åˆå§‹åŒ–çº¿æ€§è¡¨å¤±è´¥ï¼\n");
     }
 
     int position,element,operation;
     
-    while(scanf("%d",&operation) == 1){ //position¾ùÎªÊı×éÏÂ±êÎ»ÖÃ£¬operation 1Îª²åÈë£¬2ÎªÉ¾³ı¡£
+    while(scanf("%d",&operation) == 1){ //positionå‡ä¸ºæ•°ç»„ä¸‹æ ‡ä½ç½®ï¼Œoperation 1ä¸ºæ’å…¥ï¼Œ2ä¸ºåˆ é™¤ã€‚
         switch(operation){
 
-            case 1:                                 //²åÈëÄ³ÔªËØ
-                printf("ÇëÊäÈëÒª²åÈëµÄÎ»ÖÃ¼°ÆäÔªËØ£º");
+            case 1:                                 //æ’å…¥æŸå…ƒç´ 
+                printf("è¯·è¾“å…¥è¦æ’å…¥çš„ä½ç½®åŠå…¶å…ƒç´ ï¼š");
                 scanf("%d %d",&position,&element);
                 if(InsertSqList(&db,position,element)){
-                    printf("ÏßĞÔ±í²åÈë³É¹¦£¡\n");
+                    printf("çº¿æ€§è¡¨æ’å…¥æˆåŠŸï¼\n");
                     for(int i=0;i<db.Len;++i){
                         printf("%d ",db.Data[i]);
                     }
                     printf("\n");
                 }else{
-                    printf("ÏßĞÔ±í²åÈëÊ§°Ü£¡\n");
+                    printf("çº¿æ€§è¡¨æ’å…¥å¤±è´¥ï¼\n");
                 }
                 break;
 
-            case 2:                                 //É¾³ıÄ³ÔªËØ
-                printf("ÇëÊäÈëÒªÉ¾³ıµÄÎ»ÖÃ£º");
+            case 2:                                 //åˆ é™¤æŸå…ƒç´ 
+                printf("è¯·è¾“å…¥è¦åˆ é™¤çš„ä½ç½®ï¼š");
                 scanf("%d",&position);
                 if(DelSqList(&db,position)){
-                    printf("ÏßĞÔ±íÔªËØÉ¾³ı³É¹¦£¡\n");
+                    printf("çº¿æ€§è¡¨å…ƒç´ åˆ é™¤æˆåŠŸï¼\n");
                     for(int i=0;i<db.Len;++i){
                         printf("%d ",db.Data[i]);
                     }
                     printf("\n");
                 }else{
-                    printf("ÏßĞÔ±íÔªËØÉ¾³ıÊ§°Ü£¡\n");
+                    printf("çº¿æ€§è¡¨å…ƒç´ åˆ é™¤å¤±è´¥ï¼\n");
                 }
                 break;
                 
-            case 3:{                                 //°´Î»²éÕÒÄ³ÔªËØ
-                printf("ÇëÊäÈëÒª²éÑ¯µÄÎ»ÖÃ£º");
+            case 3:{                                 //æŒ‰ä½æŸ¥æ‰¾æŸå…ƒç´ 
+                printf("è¯·è¾“å…¥è¦æŸ¥è¯¢çš„ä½ç½®ï¼š");
                 scanf("%d",&position);
 
                 int *val = Search_by_position(&db,position);
 
                 if(val == NULL){
-                    printf("²éÕÒÊ§°Ü£¡\n");
+                    printf("æŸ¥æ‰¾å¤±è´¥ï¼\n");
                 }else{
-                    printf("ÄãÒª²éÕÒµÄÊÇ£º%d\n",*val);
+                    printf("ä½ è¦æŸ¥æ‰¾çš„æ˜¯ï¼š%d\n",*val);
                 }
                 break;
             }
 
-            case 4:{                                 //°´Ä¿±êÊı²éÕÒ
-                printf("ÇëÊäÈëÒª²éÕÒµÄÔªËØ£º");
+            case 4:{                                 //æŒ‰ç›®æ ‡æ•°æŸ¥æ‰¾
+                printf("è¯·è¾“å…¥è¦æŸ¥æ‰¾çš„å…ƒç´ ï¼š");
                 scanf("%d",&element);
                 int result = Search_by_num(&db,element);
                 if(result == -1){
-                    printf("²éÕÒÊ§°Ü£¡\n");
+                    printf("æŸ¥æ‰¾å¤±è´¥ï¼\n");
                 }else{
-                    printf("²éÕÒ³É¹¦£¡Î»ÓÚ %d Î»\n",result);
+                    printf("æŸ¥æ‰¾æˆåŠŸï¼ä½äº %d ä½\n",result);
                 }
                 break;
             }
 
             default:
-                printf("²Ù×÷ÊıÓĞÎó£¬ÇëÖØĞÂÊäÈë£¡\n");
+                printf("æ“ä½œæ•°æœ‰è¯¯ï¼Œè¯·é‡æ–°è¾“å…¥ï¼\n");
             
         }
     }
     
     free(db.Data);
 
-    printf("³ÌĞòÔËĞĞ½áÊø£¡\n");
+    printf("ç¨‹åºè¿è¡Œç»“æŸï¼\n");
 }
