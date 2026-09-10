@@ -29,8 +29,8 @@ int InitSqList(SqList *db){
 }
 
 int ExtendSqList(SqList *db, int x){
-    int *p = db->Data;      //临时指针保存数据
-    db->Data = malloc((db->MaxSize + x)*sizeof(int));   //分配新空间
+    ElemType *p = db->Data;      //临时指针保存数据
+    db->Data = malloc((db->MaxSize + x)*sizeof(ElemType));   //分配新空间
 
     if(db->Data == NULL){
         free(p);
@@ -48,7 +48,7 @@ int ExtendSqList(SqList *db, int x){
     return 1;
 }
 
-int InsertSqList(SqList *db, int x, int element){
+int InsertSqList(SqList *db, int x, ElemType element){
     if(x < 0 || x > db->Len){
         printf("错误：下标数非法！\n");
         return 0;       // 下标非法，拦截！
@@ -97,7 +97,7 @@ int* Search_by_position(SqList *db, int x){
     return &(db->Data[x]);
 }
 
-int Search_by_num(SqList *db, int target){
+int Search_by_num(SqList *db, ElemType target){
     for(int i=0;i<db->Len;++i){
         if(db->Data[i] == target){
             return i;
