@@ -13,7 +13,7 @@ typedef struct{
 int InitSqList(SqList *db){
     db->MaxSize = INITSIZE;
     
-    db->Data = malloc(db->MaxSize*sizeof(int));
+    db->Data = malloc(db->MaxSize*sizeof(ElemType));
 
     if(db->Data == NULL){
         return 0;
@@ -88,7 +88,7 @@ int DelSqList(SqList *db, int x){
     return 1;
 }
 
-int* Search_by_position(SqList *db, int x){
+ElemType* Search_by_position(SqList *db, int x){
     if(x < 0 || x >= db->Len){
         printf("错误：下标数非法！\n");
         return NULL;
@@ -107,6 +107,8 @@ int Search_by_num(SqList *db, ElemType target){
 }
 
 int main(){
+    system("chcp 65001");
+
     SqList db;
 
     if(InitSqList(&db)){
@@ -115,7 +117,8 @@ int main(){
         printf("初始化线性表失败！\n");
     }
 
-    int position,element,operation;
+    int position,operation;
+    ElemType element;
     
     while(scanf("%d",&operation) == 1){ //position均为数组下标位置，operation 1为插入，2为删除。
         switch(operation){
@@ -152,7 +155,7 @@ int main(){
                 printf("请输入要查询的位置：");
                 scanf("%d",&position);
 
-                int *val = Search_by_position(&db,position);
+                ElemType *val = Search_by_position(&db,position);
 
                 if(val == NULL){
                     printf("查找失败！\n");
