@@ -15,6 +15,11 @@ void LinkList_Init(LinkList *L)
     (*L)->next = NULL;
 }
 
+void Destory_LinkList(LinkList *L)
+{
+    free(L);
+}
+
 void HeadInsert(LinkList *L,int x)
 {
     LNode *New_Node;
@@ -241,5 +246,5 @@ int main()
         printf("Please Enter the operation number: ");
     }
 
-    free(L);
+    Destory_LinkList(&L);
 }
